@@ -14,7 +14,7 @@ case "$opcio" in
 
 1)
 	# Introduim el nom del primer fitxer
-	bash gestio_usuaris.sh;;
+	crear_usuario;;
 2)
 	# Introduim el nom del segon fitxer
 	bash gestio_backups.sh;;
