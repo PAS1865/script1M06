@@ -1,3 +1,12 @@
+# Esta funcion sirve para no poder ejecutar control +c para acabar el programa.
+control_c(){
+        echo "La interrupcion de la script con Cntrl + C esta deshabilitada, el script seguira ejecutandose."
+}
+ 
+trap control_c SIGINT
+
+
+
 while true; do
 
 clear
