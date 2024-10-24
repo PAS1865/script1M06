@@ -5,7 +5,7 @@ nombackup="backup"
 control_c(){
         echo "La interrupcion de la script con Cntrl + C esta deshabilitada, el script seguira ejecutandose."
 }
- 
+
 trap control_c SIGINT
 
 #Esta es la funcion para crear el backup
@@ -75,7 +75,7 @@ else
 
 	# Verificar si la selección es un número válido
 	if ! [[ "$seleccion" =~ ^[0-9]+$ ]] || [ "$seleccion" -lt 1 ] || [ "$seleccion" -ge "$contador" ]; then
-	    echo "Selección inválida. Por favor, elige un número de la lista."
+	    echo -e "\033[31mERROR:\033[0m Selección inválida. Por favor, elige un número de la lista."
 	    exit 1
 	fi
 
@@ -97,10 +97,6 @@ fi
 }
 
 
-
-
-
-
 while true; do
 
 clear
@@ -111,6 +107,7 @@ echo "2. Eliminar BackUps"
 echo "3. "
 echo "4. "
 echo "5. Salir"
+echo -e "\n"
 read -p "Indica quina opcio vols triar: " opcio
 
 case "$opcio" in
@@ -130,6 +127,8 @@ case "$opcio" in
 5)
 	exit;;
 
+*)
+	echo -e "\033[31mERROR:\033[0m No existeix aquesta possibilitat moltes gràcies"
 
 esac
 	read -p "Prem el enter per continuar"
