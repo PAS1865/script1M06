@@ -128,7 +128,7 @@ case "$opcio" in
 	exit;;
 
 *)
-	echo -e "\033[31mERROR:\033[0m No existeix aquesta possibilitat moltes gràcies"
+	echo -e "\033[31mERROR:\033[0m No existeix aquesta possibilitat moltes gràcies";;
 
 esac
 	read -p "Prem el enter per continuar"
