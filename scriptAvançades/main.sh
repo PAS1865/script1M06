@@ -17,6 +17,7 @@ echo "2. Gestio de copias de seguretat"
 echo "3. "
 echo "4. "
 echo "5. Salir"
+echo -e "\n"
 read -p "Indica quina opcio vols triar: " opcio
 
 case "$opcio" in
@@ -35,6 +36,8 @@ case "$opcio" in
  	quart;;
 5)
 	exit;;
+
+ 
 
 
 esac
