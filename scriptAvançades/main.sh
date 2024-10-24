@@ -36,8 +36,8 @@ case "$opcio" in
  	quart;;
 5)
 	exit;;
-
- 
+*)
+	echo -e "\033[31mERROR:\033[0m No existeix aquesta possibilitat moltes gràcies";;
 
 
 esac
