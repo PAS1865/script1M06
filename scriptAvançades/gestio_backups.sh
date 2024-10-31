@@ -14,7 +14,7 @@ crear_backup(){
 	#Si la carpeta del nombre no existe creara la carpeta
 	if [ ! -d $nombackup ];then
 		mkdir $nombackup
-		echo "Se ha creado la carpeta backup" > $filelog
+		echo "Se ha creado la carpeta backup" >>>> $filelog
 	fi
 
 
@@ -26,19 +26,19 @@ crear_backup(){
 
 	#Si no existe la carpeta seleccionada imprime por pantalla que hay un error i no se crea el backup
 	if [ ! -d "$carpetaSeleccionada" ];then
-		echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." > $filelog
+		echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." >>>> $filelog
 
 
 	#Si existe la carpeta pero detecta que la variable ls -A es nula significa que la carpeta esta vacia, por lo tanto no hace falta hacer backup
 	elif [ -z "$(find "$carpetaSeleccionada" -mindepth 1 -print -quit)" ];then
-		echo -e "\033[31mERROR:\033[0m Esta carpeta existe pero esta vacia, por tanto no se creara el backup." > $filelog
+		echo -e "\033[31mERROR:\033[0m Esta carpeta existe pero esta vacia, por tanto no se creara el backup." >> $filelog
 
 
 	#Si no pasa nada de lo anterior el backup se crea i se pone dentro de la carpeta llamada backup
 	else
 		# Crear el archivo tar.gz con la fecha actual
 	        tar --absolute-names -czvf "$nombackup/backup_$(basename "$carpetaSeleccionada")_$(date +%Y-%m-%d).tar.gz" "$carpetaSeleccionada"
-	        echo "Backup creat correctament: $nombackup/backup_$(basename "$carpetaSeleccionada")_$(date +%Y-%m-%d).tar.gz" > $filelog
+	        echo "Backup creat correctament: $nombackup/backup_$(basename "$carpetaSeleccionada")_$(date +%Y-%m-%d).tar.gz" >> $filelog
 		sleep 3
 
 
@@ -50,12 +50,12 @@ borrar_bkps(){
 
 	#Si no existe la carpeta seleccionada imprime por pantalla que hay un error i no se crea el backup
 	if [ ! -d "$nombackup" ];then
-	        echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." > $filelog
+	        echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." >> $filelog
 
 
 	#Si existe la carpeta pero detecta que la variable ls -A es nula significa que la carpeta esta vacia, por lo tanto no hace falta hacer backup
 	elif [ -z "$(find "$nombackup" -mindepth 1 -print -quit)" ];then
-	        echo -e "\033[31mERROR:\033[0m Esta carpeta existe pero esta vacia, por tanto no se borrara el backup." > $filelog
+	        echo -e "\033[31mERROR:\033[0m Esta carpeta existe pero esta vacia, por tanto no se borrara el backup." >> $filelog
 
 	else
 
@@ -77,7 +77,7 @@ borrar_bkps(){
 
 		# Verificar si la selección es un número válido
 		if ! [[ "$seleccion" =~ ^[0-9]+$ ]] || [ "$seleccion" -lt 1 ] || [ "$seleccion" -ge "$contador" ]; then
-		    echo -e "\033[31mERROR:\033[0m Selección inválida. Por favor, elige un número de la lista." > $filelog
+		    echo -e "\033[31mERROR:\033[0m Selección inválida. Por favor, elige un número de la lista." >> $filelog
 		    exit 1
 		fi
 
@@ -89,7 +89,7 @@ borrar_bkps(){
 
 		if [[ "$confirmacion" =~ ^[sS]$ ]]; then
 		    rm "$nombackup/$archivo_a_eliminar"
-		    echo "El archivo '$archivo_a_eliminar' ha sido eliminado." > $filelog
+		    echo "El archivo '$archivo_a_eliminar' ha sido eliminado." >> $filelog
 		else
 		    echo "Eliminación cancelada."
 		fi
@@ -102,12 +102,12 @@ extraer_backups(){
 
 	#Si no existe la carpeta seleccionada imprime por pantalla que hay un error i no se crea el backup
         if [ ! -d "$nombackup" ];then
-                echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." > $filelog
+                echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." >> $filelog
 
 
         #Si existe la carpeta pero detecta que la variable ls -A es nula significa que la carpeta esta vacia, por lo tanto no hace falta hacer backup
         elif [ -z "$(find "$nombackup" -mindepth 1 -print -quit)" ];then
-                echo -e "\033[31mERROR:\033[0m Esta carpeta existe pero esta vacia, por tanto no se creara el backup." > $filelog
+                echo -e "\033[31mERROR:\033[0m Esta carpeta existe pero esta vacia, por tanto no se creara el backup." >> $filelog
 
         else
 
@@ -129,7 +129,7 @@ extraer_backups(){
 
                 # Verificar si la selección es un número válido
                 if ! [[ "$seleccion" =~ ^[0-9]+$ ]] || [ "$seleccion" -lt 1 ] || [ "$seleccion" -ge "$contador" ]; then
-                    echo -e "\033[31mERROR:\033[0m Selección inválida. Por favor, elige un número de la lista." > $filelog
+                    echo -e "\033[31mERROR:\033[0m Selección inválida. Por favor, elige un número de la lista." >> $filelog
                     exit 1
                 fi
 
@@ -139,7 +139,7 @@ extraer_backups(){
 		read -p "Indica en que ruta quieres extraer el backup: " ruta_extraccion
 
 		if [ ! -d "$ruta_extraccion" ];then
-			echo "La ruta que has indicado no existia, pero se ha creado acontinuacion" > $filelog
+			echo "La ruta que has indicado no existia, pero se ha creado acontinuacion" >> $filelog
 			mkdir -p "$ruta_extraccion"
 		fi
 
@@ -147,7 +147,7 @@ extraer_backups(){
 		read -p "¿Estás seguro de que deseas extraer el archivo '$archivo_a_extraer'? (s/n): " confirmacion
 		if [[ "$confirmacion" =~ ^[sS]$ ]]; then
 		    tar -xvf "$nombackup/$archivo_a_extraer" -C "$ruta_extraccion"
-		    echo "El archivo '$archivo_a_extraer' ha sido extraído en $ruta_extraccion." > $filelog
+		    echo "El archivo '$archivo_a_extraer' ha sido extraído en $ruta_extraccion." >> $filelog
 		read -p "Indica si vols eliminar el backup que has extret anteriorment (s/n): " confirmacio2
 
 		if [ $confirmacio2 ! -eq ]; then
