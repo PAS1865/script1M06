@@ -1,8 +1,6 @@
 #!/bin/bash
 
-
-
-# Colores para los mensajes
+# Colors per als missatges
 
 RED='\033[0;31m'
 
@@ -10,27 +8,21 @@ GREEN='\033[0;32m'
 
 YELLOW='\033[1;33m'
 
-NC='\033[0m' # Sin color
+NC='\033[0m' # Sense color
 
-
-
-# Trap para ignorar Ctrl+C
+# Trap per ignorar Ctrl+C
 
 trap '' SIGINT
 
-
-
-# Directorio y archivo de logs
+# Directori i fitxer de logs
 
 LOG_DIR="logs"
 
 TIMESTAMP=$(date +'%Y%m%d_%H%M%S')
 
-LOG_FILE="$LOG_DIR/gestor_aplicaciones_$TIMESTAMP.log"
+LOG_FILE="$LOG_DIR/gestor_aplicacions_$TIMESTAMP.log"
 
-
-
-# Crear el directorio de logs si no existe
+# Crear el directori de logs si no existeix
 
 if [ ! -d "$LOG_DIR" ]; then
 
@@ -38,9 +30,7 @@ if [ ! -d "$LOG_DIR" ]; then
 
 fi
 
-
-
-# Función para registrar en el log
+# Funció per registrar en el log
 
 log_message() {
 
@@ -48,9 +38,7 @@ log_message() {
 
 }
 
-
-
-# Función para mostrar mensajes de error
+# Funció per mostrar missatges d'error
 
 error_message() {
 
@@ -60,85 +48,91 @@ error_message() {
 
 }
 
-
-
-# Función para mostrar mensajes de éxito
+# Funció per mostrar missatges d'èxit
 
 success_message() {
 
-    echo -e "${GREEN}[ÉXITO]${NC} $1"
+    echo -e "${GREEN}[ÈXIT]${NC} $1"
 
-    log_message "[ÉXITO] $1"
+    log_message "[ÈXIT] $1"
 
 }
 
+# Funció per comprovar privilegis d'administrador 
 
+check_sudo() {
 
-# Función para instalar un programa
+    if [ "$EUID" -ne 0 ]; then
 
-instalar() {
+        error_message "Aquest script requereix privilegis d'administrador. Executeu com a root."
 
-    echo "Introduzca el nombre del programa a instalar:"
+        exit 1
+
+    fi
+
+}
+
+# Funció per instal·lar un programa
+
+instal·lar() {
+
+    echo "Introduïu el nom del programa a instal·lar:"
 
     read programa
 
     if sudo apt-get install -y "$programa"; then
 
-        success_message "Programa $programa instalado correctamente."
+        success_message "Programa $programa instal·lat correctament."
 
     else
 
-        error_message "Fallo al instalar el programa $programa."
+        error_message "Error en instal·lar el programa $programa."
 
     fi
 
 }
 
-
-
-# Función para eliminar un programa
+# Funció per eliminar un programa
 
 eliminar() {
 
-    echo "Introduzca el nombre del programa a eliminar:"
+    echo "Introduïu el nom del programa a eliminar:"
 
     read programa
 
     if sudo apt-get remove -y "$programa"; then
 
-        success_message "Programa $programa eliminado correctamente."
+        success_message "Programa $programa eliminat correctament."
 
     else
 
-        error_message "Fallo al eliminar el programa $programa."
+        error_message "Error en eliminar el programa $programa."
 
     fi
 
 }
 
+# Funció per actualitzar programes
 
-
-# Función para actualizar programas
-
-actualizar() {
+actualitzar() {
 
     if sudo apt-get update && sudo apt-get upgrade -y; then
 
-        success_message "Actualización completada correctamente."
+        success_message "Actualització completada correctament."
 
     else
 
-        error_message "Fallo al actualizar los programas."
+        error_message "Error en actualitzar els programes."
 
     fi
 
 }
 
-
-
-# Función para gestionar perfiles de servidor
+# Funció per gestionar perfils de servidor
 
 gestionar_perfil() {
+
+    check_sudo
 
     echo "Selecciona el perfil de servidor (web/db/mail):"
 
@@ -166,7 +160,7 @@ gestionar_perfil() {
 
         *)
 
-            error_message "Perfil no reconocido."
+            error_message "Perfil no reconegut."
 
             ;;
 
@@ -174,15 +168,13 @@ gestionar_perfil() {
 
 }
 
-
-
-# Función para configurar servidor web
+# Funció per configurar servidor web
 
 configurar_servidor_web() {
 
-    log_message "Configurando perfil de servidor web..."
+    log_message "Configurant perfil de servidor web..."
 
-    echo "Configurando perfil de servidor web..."
+    echo "Configurant perfil de servidor web..."
 
     apt-get update
 
@@ -196,25 +188,23 @@ configurar_servidor_web() {
 
     if systemctl restart apache2; then
 
-        success_message "Servidor web configurado."
+        success_message "Servidor web configurat."
 
     else
 
-        error_message "Fallo al configurar el servidor web."
+        error_message "Error en configurar el servidor web."
 
     fi
 
 }
 
-
-
-# Función para configurar servidor de bases de datos
+# Funció per configurar servidor de bases de dades
 
 configurar_servidor_db() {
 
-    log_message "Configurando perfil de servidor de bases de datos..."
+    log_message "Configurant perfil de servidor de bases de dades..."
 
-    echo "Configurando perfil de servidor de bases de datos..."
+    echo "Configurant perfil de servidor de bases de dades..."
 
     apt-get update
 
@@ -222,25 +212,23 @@ configurar_servidor_db() {
 
     if systemctl start mysql && systemctl enable mysql; then
 
-        success_message "Servidor de bases de datos configurado."
+        success_message "Servidor de bases de dades configurat."
 
     else
 
-        error_message "Fallo al configurar el servidor de bases de datos."
+        error_message "Error en configurar el servidor de bases de dades."
 
     fi
 
 }
 
-
-
-# Función para configurar servidor de correo
+# Funció per configurar servidor de correu
 
 configurar_servidor_mail() {
 
-    log_message "Configurando perfil de servidor de correo..."
+    log_message "Configurant perfil de servidor de correu..."
 
-    echo "Configurando perfil de servidor de correo..."
+    echo "Configurant perfil de servidor de correu..."
 
     apt-get update
 
@@ -248,127 +236,115 @@ configurar_servidor_mail() {
 
     if systemctl start postfix && systemctl enable postfix; then
 
-        success_message "Servidor de correo configurado."
+        success_message "Servidor de correu configurat."
 
     else
 
-        error_message "Fallo al configurar el servidor de correo."
+        error_message "Error en configurar el servidor de correu."
 
     fi
 
 }
 
+# Funció per llistar aplicacions instal·lades
 
+llistar_aplicacions() {
 
-# Función para listar aplicaciones instaladas
+    echo -e "${YELLOW}Aplicacions instal·lades:${NC}"
 
-listar_aplicaciones() {
-
-    echo -e "${YELLOW}Aplicaciones instaladas:${NC}"
-
-    log_message "Listando aplicaciones instaladas."
+    log_message "Llistant aplicacions instal·lades."
 
     dpkg --list | less
 
 }
 
-
-
-# Función para pausar un proceso
+# Funció per pausar un procés
 
 pausar_proces() {
 
-    echo "Introduzca el PID del proceso a pausar:"
+    echo "Introduïu el PID del procés a pausar:"
 
     read pid
 
     if sudo kill -STOP "$pid"; then
 
-        success_message "Proceso $pid pausado correctamente."
+        success_message "Procés $pid pausat correctament."
 
     else
 
-        error_message "Fallo al pausar el proceso $pid."
+        error_message "Error en pausar el procés $pid."
 
     fi
 
 }
 
+# Funció per canviar la prioritat d'un procés
 
+canviar_prioritat() {
 
-# Función para cambiar la prioridad de un proceso
-
-cambiar_prioridad() {
-
-    echo "Introduzca el PID del proceso:"
+    echo "Introduïu el PID del procés:"
 
     read pid
 
-    echo "Introduzca la nueva prioridad (-20 a 19):"
+    echo "Introduïu la nova prioritat (-20 a 19):"
 
-    read prioridad
+    read prioritat
 
-    if sudo renice "$prioridad" -p "$pid"; then
+    if sudo renice "$prioritat" -p "$pid"; then
 
-        success_message "Prioridad del proceso $pid cambiada a $prioridad."
+        success_message "Prioritat del procés $pid canviada a $prioritat."
 
     else
 
-        error_message "Fallo al cambiar la prioridad del proceso $pid."
+        error_message "Error en canviar la prioritat del procés $pid."
 
     fi
 
 }
-
-
 
 # Menú principal
 
 while true; do
 
-    echo -e "\n${YELLOW}Menú de Gestión de Aplicaciones:${NC}"
+    echo -e "\n${YELLOW}Menú de Gestió d'Aplicacions:${NC}"
 
-    echo "1. Instalar un programa"
+    echo "1. Instal·lar un programa"
 
     echo "2. Eliminar un programa"
 
-    echo "3. Actualizar programas"
+    echo "3. Actualitzar programes"
 
-    echo "4. Gestionar perfiles de servidor"
+    echo "4. Gestionar perfils de servidor"
 
-    echo "5. Listar aplicaciones instaladas"
+    echo "5. Llistar aplicacions instal·lades"
 
-    echo "6. Pausar un proceso"
+    echo "6. Pausar un procés"
 
-    echo "7. Cambiar la prioridad de un proceso"
+    echo "7. Canviar la prioritat d'un procés"
 
-    echo "8. Salir"
+    echo "8. Sortir"
 
-    
+    read -p "Seleccioneu una opció: " opcio
 
-    read -p "Seleccione una opción: " opcion
+    case "$opcio" in
 
+        1) log_message "Seleccionada opció: Instal·lar un programa"; instal·lar ;;
 
+        2) log_message "Seleccionada opció: Eliminar un programa"; eliminar ;;
 
-    case "$opcion" in
+        3) log_message "Seleccionada opció: Actualitzar programes"; actualitzar ;;
 
-        1) log_message "Seleccionada opción: Instalar un programa"; instalar ;;
+        4) log_message "Seleccionada opció: Gestionar perfils de servidor"; gestionar_perfil ;;
 
-        2) log_message "Seleccionada opción: Eliminar un programa"; eliminar ;;
+        5) log_message "Seleccionada opció: Llistar aplicacions instal·lades"; llistar_aplicacions ;;
 
-        3) log_message "Seleccionada opción: Actualizar programas"; actualizar ;;
+        6) log_message "Seleccionada opció: Pausar un procés"; pausar_proces ;;
 
-        4) log_message "Seleccionada opción: Gestionar perfiles de servidor"; gestionar_perfil ;;
+        7) log_message "Seleccionada opció: Canviar la prioritat d'un procés"; canviar_prioritat ;;
 
-        5) log_message "Seleccionada opción: Listar aplicaciones instaladas"; listar_aplicaciones ;;
+        8) log_message "Seleccionada opció: Sortir"; echo "Sortint..."; exit 0 ;;
 
-        6) log_message "Seleccionada opción: Pausar un proceso"; pausar_proces ;;
-
-        7) log_message "Seleccionada opción: Cambiar la prioridad de un proceso"; cambiar_prioridad ;;
-
-        8) log_message "Seleccionada opción: Salir"; echo "Saliendo..."; exit 0 ;;
-
-        *) error_message "Opción no válida. Intente de nuevo." ;;
+        *) error_message "Opció no vàlida. Intenteu de nou." ;;
 
     esac
 
