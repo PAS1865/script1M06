@@ -6,7 +6,7 @@ mailfile="gmail.txt"
 
 # Esta funcion sirve para no poder ejecutar control +c para acabar el programa.
 control_c(){
-        echo "La interrupcion de la script con Cntrl + C esta deshabilitada, el script seguira ejecutandose."
+	echo "La interrupció del script amb Ctrl + C està deshabilitada, el script seguirà executant-se."
 }
 
 crear_usuario_automatico() {
