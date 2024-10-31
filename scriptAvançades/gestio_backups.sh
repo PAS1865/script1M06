@@ -152,7 +152,6 @@ extraer_backups(){
 
 		if [ $confirmacio2 ! -eq ]; then
 
-
 			echo "Se ha eliminado el backup"
 			rm "nombackup/$archivo_a_extraer"
 
@@ -176,8 +175,7 @@ echo "BENVINGUTS AL SCRIPT DE GESTIO DE COPIES DE SEGURETAT"
 echo "1. Crear BackUps"
 echo "2. Eliminar BackUps"
 echo "3. Extraer Backups"
-echo "4. "
-echo "5. Salir"
+echo "4. Salir"
 echo -e "\n"
 read -p "Indica quina opcio vols triar: " opcio
 
@@ -193,9 +191,6 @@ case "$opcio" in
 	# Introduim el nom del tercer fitxer
 	extraer_backups;;
 4)
-	# Introduim el nom del quart fitxer
- 	quart;;
-5)
 	exit;;
 
 *)
