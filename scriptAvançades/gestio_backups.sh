@@ -14,7 +14,7 @@ crear_backup(){
 	#Si la carpeta del nombre no existe creara la carpeta
 	if [ ! -d $nombackup ];then
 		mkdir $nombackup
-		echo "Se ha creado la carpeta backup" >>>> $filelog
+		echo "Se ha creado la carpeta backup" >> $filelog
 	fi
 
 
@@ -26,7 +26,7 @@ crear_backup(){
 
 	#Si no existe la carpeta seleccionada imprime por pantalla que hay un error i no se crea el backup
 	if [ ! -d "$carpetaSeleccionada" ];then
-		echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." >>>> $filelog
+		echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." >> $filelog
 
 
 	#Si existe la carpeta pero detecta que la variable ls -A es nula significa que la carpeta esta vacia, por lo tanto no hace falta hacer backup
