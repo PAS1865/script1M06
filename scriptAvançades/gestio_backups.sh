@@ -163,7 +163,7 @@ extraer_backups(){
 		read -p "Indica si vols eliminar el backup que has extret anteriorment (s/n): " confirmacio2
 
 			echo "Se ha eliminado el backup"
-			rm "nombackup/$archivo_a_extraer"
+			rm "$nombackup/$archivo_a_extraer"
 
 		else
 		    echo "Extración cancelada."
