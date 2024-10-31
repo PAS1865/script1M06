@@ -1,6 +1,6 @@
 # Esta funcion sirve para no poder ejecutar control +c para acabar el programa.
 control_c(){
-        echo "La interrupción del script con Ctrl + C está deshabilitado, el script seguirá ejecutándose."
+	echo "La interrupció del script amb Ctrl + C està deshabilitada, el script seguirà executant-se."
 }
  
 trap control_c SIGINT
@@ -14,7 +14,7 @@ clear
 echo "BENVINGUTS AL NOSTRE SCRIPT AVANÇAT"
 echo "1. Gestió d'usuaris"
 echo "2. Gestió de copies de seguretat"
-echo "3. "
+echo "3. Gestió aplicacions"
 echo "4. Sortir"
 echo -e "\n"
 read -p "Indica quina opció vols triar: " opcio
