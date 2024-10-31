@@ -1,6 +1,6 @@
 # Esta funcion sirve para no poder ejecutar control +c para acabar el programa.
 control_c(){
-        echo "La interrupcion de la script con Cntrl + C esta deshabilitada, el script seguira ejecutandose."
+        echo "La interrupción del script con Ctrl + C está deshabilitado, el script seguirá ejecutándose."
 }
  
 trap control_c SIGINT
@@ -12,12 +12,12 @@ while true; do
 clear
 
 echo "BENVINGUTS AL NOSTRE SCRIPT AVANÇAT"
-echo "1. Gestio d'usuaris"
-echo "2. Gestio de copias de seguretat"
+echo "1. Gestió d'usuaris"
+echo "2. Gestió de copies de seguretat"
 echo "3. "
-echo "4. Salir"
+echo "4. Sortir"
 echo -e "\n"
-read -p "Indica quina opcio vols triar: " opcio
+read -p "Indica quina opció vols triar: " opcio
 
 case "$opcio" in
 
@@ -29,7 +29,7 @@ case "$opcio" in
 	bash gestio_backups.sh;;
 3)
 	# Introduim el nom del tercer fitxer
-	tercer;;
+	bash script_gestion_apps;;
 4)
 	exit;;
 *)
