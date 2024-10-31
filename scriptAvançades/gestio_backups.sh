@@ -53,8 +53,8 @@ borrar_bkps(){
 
 	#Si no existe la carpeta seleccionada imprime por pantalla que hay un error i no se crea el backup
 	if [ ! -d "$nombackup" ];then
-	        echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup." >> $filelog
-	 	 echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no es fara cap backup."
+	        echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no s'esborrara cap backup." >> $filelog
+	 	 echo -e "\033[31mERROR:\033[0m Aquesta carpeta no existeix, per tant no s'esborrara cap backup."
 
 
 	#Si existe la carpeta pero detecta que la variable ls -A es nula significa que la carpeta esta vacia, por lo tanto no hace falta hacer backup
