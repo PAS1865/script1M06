@@ -162,14 +162,8 @@ extraer_backups(){
        		    echo "El archivo '$archivo_a_extraer' ha sido extraído en $ruta_extraccion."
 		read -p "Indica si vols eliminar el backup que has extret anteriorment (s/n): " confirmacio2
 
-		if [ $confirmacio2 ! -eq ]; then
-
 			echo "Se ha eliminado el backup"
 			rm "nombackup/$archivo_a_extraer"
-
-		else
-			echo "No se ha eliminat el backup"
-		fi
 
 		else
 		    echo "Extración cancelada."
