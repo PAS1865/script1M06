@@ -29,7 +29,7 @@ case "$opcio" in
 	bash gestio_backups.sh;;
 3)
 	# Introduim el nom del tercer fitxer
-	bash script_gestion_apps;;
+	bash script_gestion_apps.sh;;
 4)
 	exit;;
 *)
